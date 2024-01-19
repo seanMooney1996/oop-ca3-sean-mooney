@@ -39,28 +39,28 @@ public class CA3_Question6 {
                 double profit = 0;
                 int remainingQty = qty;
 
-                if (qty<=totalStocks) {
-                    while (remainingQty>0) {
+                if (qty <= totalStocks) {
+                    while (remainingQty > 0) {
                         if (stocks.peek().getQuantity() < remainingQty) {
                             Share s = stocks.poll();
                             int quantityToBeSold = s.getQuantity();
                             spent = s.getPrice() * quantityToBeSold;
-                            profit += (price*quantityToBeSold)-spent;
-                            remainingQty = remainingQty-quantityToBeSold;
+                            profit += (price * quantityToBeSold) - spent;
+                            remainingQty = remainingQty - quantityToBeSold;
                             totalStocks -= quantityToBeSold;
                         } else {
                             Share s = stocks.peek();
                             int quantityToBeSold = remainingQty;
                             spent = s.getPrice() * quantityToBeSold;
-                            profit += (price*quantityToBeSold)-spent;
-                            remainingQty=0;
+                            profit += (price * quantityToBeSold) - spent;
+                            remainingQty = 0;
                             totalStocks -= quantityToBeSold;
                         }
                     }
                 } else {
                     System.out.println("Attempting to sell more shares than available");
                 }
-                System.out.println("This sale made a profit of "+profit);
+                System.out.println("This sale made a profit of " + profit);
             }
         } while (!command.equalsIgnoreCase("quit"));
     }
