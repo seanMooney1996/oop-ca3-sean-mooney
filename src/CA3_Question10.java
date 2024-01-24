@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -6,66 +8,27 @@ import java.util.*;
  */
 public class CA3_Question10 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)throws IOException {
         Map<String, TreeSet<DistanceTo>> directConnections = new HashMap<>();
 
-        TreeSet<DistanceTo> t1 = new TreeSet<>();
-        t1.add(new DistanceTo("Pierre", 2));
-        t1.add(new DistanceTo("Pueblo", 8));
-        t1.add(new DistanceTo("Phoenix", 4));
+        File i = new File("src/connections.txt");
+        Scanner input = new Scanner(i);
 
-        directConnections.put("Pendleton", t1);
+        while (input.hasNextLine()){
+            String from = input.next();
+            String to = input.next();
+            int distance = input.nextInt();
+            DistanceTo dt = new DistanceTo(to,distance);
+            if (!directConnections.containsKey(from)){
+                TreeSet<DistanceTo> t1 = new TreeSet<>();
+                t1.add(dt);
+                directConnections.put(from,t1);
+            } else {
+                directConnections.get(from).add(dt);
+            }
 
-        TreeSet<DistanceTo> t2 = new TreeSet<>();
-        t2.add(new DistanceTo("Pendleton", 2));
-        t2.add(new DistanceTo("Pueblo", 3));
-        directConnections.put("Pierre", t2);
+        }
 
-
-        TreeSet<DistanceTo> t3 = new TreeSet<>();
-        t3.add(new DistanceTo("Peoria", 3));
-        t3.add(new DistanceTo("Pierre", 3));
-        t3.add(new DistanceTo("Pendleton", 8));
-        t3.add(new DistanceTo("Phoenix", 3));
-
-        directConnections.put("Pueblo", t3);
-
-        TreeSet<DistanceTo> t4 = new TreeSet<>();
-        t4.add(new DistanceTo("Pueblo", 3));
-        t4.add(new DistanceTo("Pendleton", 4));
-        t4.add(new DistanceTo("Pittsburgh", 10));
-        t4.add(new DistanceTo("Peoria", 4));
-        t4.add(new DistanceTo("Pensacola", 5));
-
-        directConnections.put("Phoenix", t4);
-
-        TreeSet<DistanceTo> t5 = new TreeSet<>();
-        t5.add(new DistanceTo("Pueblo", 3));
-        t5.add(new DistanceTo("Phoenix", 4));
-        t5.add(new DistanceTo("Pittsburgh", 5));
-
-        directConnections.put("Peoria", t5);
-
-        TreeSet<DistanceTo> t6 = new TreeSet<>();
-        t6.add(new DistanceTo("Peoria", 5));
-        t6.add(new DistanceTo("Phoenix", 10));
-        t6.add(new DistanceTo("Pensacola", 4));
-        t6.add(new DistanceTo("Princeton", 2));
-
-        directConnections.put("Pittsburgh", t6);
-
-        TreeSet<DistanceTo> t7 = new TreeSet<>();
-        t7.add(new DistanceTo("Pittsburgh", 4));
-        t7.add(new DistanceTo("Phoenix", 5));
-        t7.add(new DistanceTo("Princeton", 5));
-
-        directConnections.put("Pensacola", t7);
-
-        TreeSet<DistanceTo> t8 = new TreeSet<>();
-        t8.add(new DistanceTo("Pensacola", 2));
-        t8.add(new DistanceTo("Pittsburgh", 5));
-
-        directConnections.put("Princeton", t8);
 
         String from = "Pendleton";
 
