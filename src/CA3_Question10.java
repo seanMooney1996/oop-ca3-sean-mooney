@@ -23,10 +23,10 @@ public class CA3_Question10 {
 
 
         TreeSet<DistanceTo> t3 = new TreeSet<>();
+        t3.add(new DistanceTo("Peoria", 3));
         t3.add(new DistanceTo("Pierre", 3));
         t3.add(new DistanceTo("Pendleton", 8));
         t3.add(new DistanceTo("Phoenix", 3));
-        t3.add(new DistanceTo("Peoria", 3));
 
         directConnections.put("Pueblo", t3);
 
@@ -62,8 +62,8 @@ public class CA3_Question10 {
         directConnections.put("Pensacola", t7);
 
         TreeSet<DistanceTo> t8 = new TreeSet<>();
-        t6.add(new DistanceTo("Pensacola", 2));
-        t6.add(new DistanceTo("Pittsburgh", 5));
+        t8.add(new DistanceTo("Pensacola", 2));
+        t8.add(new DistanceTo("Pittsburgh", 5));
 
         directConnections.put("Princeton", t8);
 
@@ -75,10 +75,10 @@ public class CA3_Question10 {
         Map<String, Integer> shortestKnownDistance = new HashMap<>();
 
         while (!priority.isEmpty()) {
-            DistanceTo smallestDistance = priority.poll();
-            String target = smallestDistance.getTarget();
+            DistanceTo shortestPriority = priority.poll();
+            String target = shortestPriority.getTarget();
             if (!shortestKnownDistance.containsKey(target)) {
-                int d = smallestDistance.getDistance();
+                int d = shortestPriority.getDistance();
                 shortestKnownDistance.put(target, d);
                 for (Map.Entry<String, TreeSet<DistanceTo>> entry : directConnections.entrySet()) {
                     String city = entry.getKey();
@@ -91,7 +91,7 @@ public class CA3_Question10 {
                 }
             }
         }
-        
+
         for (Map.Entry<String, Integer> entry : shortestKnownDistance.entrySet()) {
             String city = entry.getKey();
             int shortestDistanceToThatCity = entry.getValue();
