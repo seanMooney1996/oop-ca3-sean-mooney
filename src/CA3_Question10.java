@@ -8,21 +8,21 @@ import java.util.*;
  */
 public class CA3_Question10 {
 
-    public static void main(String[] args)throws IOException {
+    public static void main(String[] args) throws IOException {
         Map<String, TreeSet<DistanceTo>> directConnections = new HashMap<>();
 
         File i = new File("src/connections.txt");
         Scanner input = new Scanner(i);
 
-        while (input.hasNextLine()){
+        while (input.hasNextLine()) {
             String from = input.next();
             String to = input.next();
             int distance = input.nextInt();
-            DistanceTo dt = new DistanceTo(to,distance);
-            if (!directConnections.containsKey(from)){
+            DistanceTo dt = new DistanceTo(to, distance);
+            if (!directConnections.containsKey(from)) {
                 TreeSet<DistanceTo> t1 = new TreeSet<>();
                 t1.add(dt);
-                directConnections.put(from,t1);
+                directConnections.put(from, t1);
             } else {
                 directConnections.get(from).add(dt);
             }
@@ -39,18 +39,15 @@ public class CA3_Question10 {
 
         while (!priority.isEmpty()) {
             DistanceTo shortestPriority = priority.poll();
-            String target = shortestPriority.getTarget();
-            if (!shortestKnownDistance.containsKey(target)) {
-                int d = shortestPriority.getDistance();
-                shortestKnownDistance.put(target, d);
-                for (Map.Entry<String, TreeSet<DistanceTo>> entry : directConnections.entrySet()) {
-                    String city = entry.getKey();
-                    TreeSet<DistanceTo> cityConnections = entry.getValue();
-                    if (city.equals(target)) {
-                        for (DistanceTo dt : cityConnections) {
-                            priority.add(new DistanceTo(dt.getTarget(), dt.getDistance() + d));
-                        }
-                    }
+            String currentPCity = shortestPriority.getTarget();
+            if (!shortestKnownDistance.containsKey(currentPCity)) {
+                int currentPDistance = shortestPriority.getDistance();
+                shortestKnownDistance.put(currentPCity, currentPDistance);
+                TreeSet<DistanceTo> currentCitiesConnections = directConnections.get(currentPCity);
+                for (DistanceTo dt : currentCitiesConnections) {
+                    String nextCity = dt.getTarget();
+                    int newDistance = currentPDistance + dt.getDistance();
+                    priority.add(new DistanceTo(nextCity, newDistance));
                 }
             }
         }
