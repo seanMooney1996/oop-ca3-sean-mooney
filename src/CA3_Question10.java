@@ -15,6 +15,7 @@ public class CA3_Question10 {
         Scanner input = new Scanner(i);
 
         while (input.hasNextLine()) {
+
             String from = input.next();
             String to = input.next();
             int distance = input.nextInt();
